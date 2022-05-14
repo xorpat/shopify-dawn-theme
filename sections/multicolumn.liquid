@@ -62,7 +62,7 @@
                   {% assign spaced_image = true %}
                 {% endif %}
               	{% if section.settings.image_width == 'icon' %}
-              		
+              		 <img class="multicolumn-card__image" src="{{ block.settings.image | image_url: width: 550 }}">
               	{% else %}
                   <div class="multicolumn-card__image-wrapper multicolumn-card__image-wrapper--{{ section.settings.image_width }}-width{% if section.settings.image_width != 'full' or spaced_image %} multicolumn-card-spacing{% endif %}">
                     <div class="media media--transparent media--{{ section.settings.image_ratio }}"
