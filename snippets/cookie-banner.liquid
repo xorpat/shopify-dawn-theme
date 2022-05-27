@@ -20,6 +20,7 @@
   
   <script>
     function getBannerEl() {
+      
       return document.getElementById('cookies-banner');
     }
   
@@ -28,6 +29,7 @@
     }
   
     function showBanner() {
+        
      getBannerEl().style.display = 'block';
     }
   
@@ -46,8 +48,7 @@
     function initCookieBanner() {
       const userCanBeTracked = window.Shopify.customerPrivacy.userCanBeTracked();
       const userTrackingConsent = window.Shopify.customerPrivacy.getTrackingConsent();
-  
-      if(!userCanBeTracked && userTrackingConsent === 'no_interaction') {
+      if(!userCanBeTracked && userTrackingConsent) { //=== 'no_interaction'
         showBanner();
       }
     }
@@ -62,7 +63,6 @@
       if (error) {
         throw error;
       }
-  
       initCookieBanner();
     });
   </script>
