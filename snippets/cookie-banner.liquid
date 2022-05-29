@@ -10,14 +10,14 @@
       background: #fff;
       border-top: 1px solid #dcdcdc;
     }
+
   </style>
-  
   <div id="cookies-banner">
-    <span>This website uses cookies to ensure you get the best experience on our website.</span>
-    <button style="margin-left: 1em;" onclick="handleDecline()">Decline</button>
-    <button style="margin-left: 1em;" onclick="handleAccept()">Accept</button>
+      <span>This website uses cookies to ensure you get the best experience on our website.</span>
+      <button style="margin-left: 1em;" onclick="handleDecline()">Decline</button>
+      <button style="margin-left: 1em;" onclick="handleAccept()">Accept</button>
   </div>
-  
+
   <script>
     function getBannerEl() {
       
@@ -45,12 +45,13 @@
       window.Shopify.customerPrivacy.setTrackingConsent(false,hideBanner);
     }
   
-    function initCookieBanner() {
+    function initCookieBanner() { // Cookie Banner gets controled in configurations > customer privacy (activate) automatically sets shouldShowGDPRBanner() to true and shows banner;
       const userCanBeTracked = window.Shopify.customerPrivacy.userCanBeTracked();
       const userTrackingConsent = window.Shopify.customerPrivacy.getTrackingConsent();
-      if(!userCanBeTracked && userTrackingConsent) { //=== 'no_interaction'
+      if(!userCanBeTracked && userTrackingConsent === 'no_interaction') { 
         showBanner();
       }
+      showBanner(); //workaround
     }
   
     window.Shopify.loadFeatures([

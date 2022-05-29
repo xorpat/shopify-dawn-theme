@@ -1,0 +1,44 @@
+<style>
+    .modalBackground {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(200, 200, 200, .4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 5;     
+    }
+
+
+    .modalContainer {
+        width: 500px;
+        height: 500px;
+        border-radius: 12px;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        display: flex;
+        flex-direction: column;
+        padding: 25px;
+    }
+
+</style>
+
+<div class="modalBackground">
+    <div class="modalContainer">
+        <div class="modalTitle">
+            <h4>Ihre Privatsphäre ist uns wichtig</h4>
+        </div>
+        <div class="modalBody">
+            Wir nutzen Cookies auf unserer Website. Einige von ihnen sind essenziell, während andere uns helfen, diese Website und Ihre Erfahrung zu verbessern.
+        </div>
+        <div class="modalFooter">
+            <button style="margin-left: 1em;" onclick="handleDecline()">Einstellungen</button>
+            <button style="margin-left: 1em;" onclick="handleAccept()">Zustimmen</button>
+        </div>
+    </div>
+</div>
+
