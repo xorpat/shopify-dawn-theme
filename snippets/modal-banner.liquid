@@ -1,5 +1,5 @@
 <style>
-    .modalBackground {
+    #modalBackground {
         height: 100%;
         width: 100%;
         margin: 0;
@@ -13,32 +13,97 @@
         z-index: 5;     
     }
 
-
     .modalContainer {
-        width: 500px;
-        height: 500px;
+        width: auto;
+        height: auto;
         border-radius: 12px;
         background-color: white;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         display: flex;
         flex-direction: column;
+        justify-content: center;
         padding: 25px;
     }
 
+    .text-block {
+        width: 500px;
+        font-size: 14px;
+        padding: 10px;
+    }
 </style>
 
-<div class="modalBackground">
+<div id="modalBackground">
     <div class="modalContainer">
         <div class="modalTitle">
             <h4>Ihre Privatsphäre ist uns wichtig</h4>
         </div>
         <div class="modalBody">
-            Wir nutzen Cookies auf unserer Website. Einige von ihnen sind essenziell, während andere uns helfen, diese Website und Ihre Erfahrung zu verbessern.
+           <div class="text-block"> Wir nutzen Cookies auf unserer Website. Einige von ihnen sind essenziell, während andere uns helfen, diese Website und 
+            Ihre Erfahrung zu verbessern (Analytics, Performance Prüfung, Nutzererfahrung,
+            einschließlich relevanter Inhalte und personalisierter Werbung).
+            Um diese Dienste verwenden zu dürfen, benötigen wir Deine Einwilligung.
+
+            Hierfür nutzen wir die Informationen, einschließlich Daten zur Nutzung der Seiten sowie zu Endgeräten. 
+            Mit Klick auf „Akzeptieren“ willigst Du in die Verwendung von Cookies ein.
+            Zum anderen holen wir auf diese Weise, soweit erforderlich, deine Einwilligung in die auf diesen Cookies basierende Verarbeitung Deiner Daten ein, 
+            einschließlich der Übermittlung solcher Daten an unsere Marketingpartner (Dritte). 
+            Unsere Marketingpartner verwenden ebenfalls Cookies und andere Technologien zur Personalisierung, 
+            Messung und Analyse von Inhalten/Werbung. 
+            Wenn Du nicht einverstanden bist, beschränken wir uns auf wesentliche Cookies und Technologien. 
+            Deine Einwilligung kannst Du jederzeit in den <span><a href="">Einstellungen</a></span> ändern. </div> 
         </div>
         <div class="modalFooter">
-            <button style="margin-left: 1em;" onclick="handleDecline()">Einstellungen</button>
-            <button style="margin-left: 1em;" onclick="handleAccept()">Zustimmen</button>
+            <button style="margin-left: 1em;" onclick="handleDecline()">Ablehnen</button>
+            <button style="margin-left: 1em;" onclick="handleAccept()">Akzeptieren</button>
         </div>
     </div>
 </div>
 
+<script>
+    function getBannerEl() {
+      
+      return document.getElementById('modalBackground');
+    }
+  
+    function hideBanner(res) {
+      getBannerEl().style.display = 'none';
+    }
+  
+    function showBanner() {
+        
+     getBannerEl().style.display = 'flex';
+    }
+  
+    function handleAccept(e) {
+      window.Shopify.customerPrivacy.setTrackingConsent(true, hideBanner);
+  
+      document.addEventListener('trackingConsentAccepted',function() {
+        console.log('trackingConsentAccepted event fired');
+      });
+    }
+  
+    function handleDecline() {
+      window.Shopify.customerPrivacy.setTrackingConsent(false,hideBanner);
+    }
+  
+    function initCookieBanner() { // Cookie Banner gets controled in configurations > customer privacy (activate) automatically sets shouldShowGDPRBanner() to true and shows banner;
+      const userCanBeTracked = window.Shopify.customerPrivacy.userCanBeTracked();
+      const userTrackingConsent = window.Shopify.customerPrivacy.getTrackingConsent();
+      if(!userCanBeTracked && userTrackingConsent === 'no_interaction') { 
+        showBanner();
+      }//workaround
+    }
+  
+    window.Shopify.loadFeatures([
+      {
+        name: 'consent-tracking-api',
+        version: '0.1',
+      }
+    ],
+    function(error) {
+      if (error) {
+        throw error;
+      }
+      initCookieBanner();
+    });
+  </script>
