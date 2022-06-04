@@ -109,7 +109,7 @@
       const userTrackingConsent = window.Shopify.customerPrivacy.getTrackingConsent();
       if(!userCanBeTracked && userTrackingConsent === 'no_interaction') { 
         showBanner();
-      }//workaround
+      }
     }
   
     window.Shopify.loadFeatures([
